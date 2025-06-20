@@ -30,3 +30,6 @@ repos:
     rev: v1.11.2
     hooks:
       - id: mypy
+        verbose: true
+        args: [--show-error-codes]
+        additional_dependencies: ['pytest', 'types-requests', 'pandas-stubs', 'cognite-sdk', 'types-pyyaml']
