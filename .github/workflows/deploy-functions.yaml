@@ -8,7 +8,7 @@ jobs:
   generate-matrix:
     uses: "./.github/workflows/generate-matrix.yaml"
     with:
-      deploy_folders: "example_function1"
+      deploy_folders: "Bargeddie_Line_status, Bargeddie_Uptime_Calculation_per_line"
       trigger_deploy_all_folders: "common"
 
   deploy:
