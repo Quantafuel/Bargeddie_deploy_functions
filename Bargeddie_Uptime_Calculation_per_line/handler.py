@@ -12,13 +12,13 @@ def handle(client):
     from cognite.client.utils import ZoneInfo
 
     dps1 = client.time_series.data.retrieve_dataframe_in_tz(
-        external_id='BRGD:s="1-03-M1_IW3_Strom"',
+        external_id='BRGD:s="DB_1-03-M1"."Motorleistung"',
         start=datetime(2025, 6, 17, tzinfo=ZoneInfo("Europe/London")),
         end=datetime.now(tz=ZoneInfo("Europe/London")),
     )
 
     dps2 = client.time_series.data.retrieve_dataframe_in_tz(
-        external_id='BRGD:s="2-03-M1_IW3_Strom"',
+        external_id='BRGD:s="DB_2-03-M1"."Motorleistung"',
         start=datetime(2025, 6, 17, tzinfo=ZoneInfo("Europe/London")),
         end=datetime.now(tz=ZoneInfo("Europe/London")),
     )
@@ -29,7 +29,7 @@ def handle(client):
         start_time = None
         column_name = df.columns[0]
         for index, row in df.iterrows():
-            if row[column_name] > 100:
+            if row[column_name] > 0.3:
                 if start_time is None:
                     start_time = index
             elif start_time is not None:
