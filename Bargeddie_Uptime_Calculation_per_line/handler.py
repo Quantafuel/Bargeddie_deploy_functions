@@ -8,7 +8,6 @@ def handle(client):
 
     import pandas as pd
 
-    from cognite.client.data_classes import TimeSeriesWrite
     from cognite.client.utils import ZoneInfo
 
     dps1 = client.time_series.data.retrieve_dataframe_in_tz(
@@ -49,26 +48,6 @@ def handle(client):
 
     ts_xid1 = "brgd_line1_runningtime"
     ts_xid2 = "brgd_line2_runningtime"
-
-    try:
-        ts = client.time_series.create(
-            TimeSeriesWrite(name="Bargeddie Line 1 accumulated running time", external_id=ts_xid1)
-        )
-        client.time_series.data.insert([(datetime.now(), 0)], external_id=ts_xid1)
-        print("Time series 1 created successfully:", ts)
-    except Exception as e:
-        print("Time series already exists")
-        print(type(e))
-
-    try:
-        ts = client.time_series.create(
-            TimeSeriesWrite(name="Bargeddie Line 2 accumulated running time", external_id=ts_xid2)
-        )
-        client.time_series.data.insert([(datetime.now(), 0)], external_id=ts_xid2)
-        print("Time series 2 created successfully:", ts)
-    except Exception as e:
-        print("Time series already exists")
-        print(type(e))
 
     client.time_series.data.insert([(datetime.now(), line1_running_time.total_seconds())], external_id=ts_xid1)
     client.time_series.data.insert([(datetime.now(), line2_running_time.total_seconds())], external_id=ts_xid2)
