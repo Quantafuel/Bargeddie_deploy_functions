@@ -8,8 +8,7 @@ jobs:
     strategy:
       matrix:
         function:
-          - Bargeddie_Uptime_Calculation_per_line
-          - Bargeddie_Line_status
+          - Bargeddie_RefreshStaleData
     steps:
       - uses: actions/checkout@v2
 
