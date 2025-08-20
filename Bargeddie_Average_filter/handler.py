@@ -30,6 +30,10 @@ def handle(client):
         data = ts_dp_df[i]
         result_sg = pd.Series(scs.savgol_filter(data, window_length=20, polyorder=1), index=data.index)
 
+        for position, (index, value) in enumerate(data.items()):
+            if value == 0:
+                result_sg.iloc[position] = 0
+
         result_sg_df = result_sg.to_frame()
         result_sg_df.rename(columns={0: "Values"}, inplace=True)
 
@@ -37,4 +41,4 @@ def handle(client):
 
         client.time_series.data.insert(filtered_result, external_id=i + "_filtered")
 
-        print(f"Addde filtered data from {tw_start} to {tw_stop} for timeseries {i + '_filtered'}")
+        print(f"Added filtered data from {tw_start} to {tw_stop} for timeseries {i + '_filtered'}")
