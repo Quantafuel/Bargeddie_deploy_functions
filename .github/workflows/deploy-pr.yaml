@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         function:
-          - Bargeddie_RefreshStaleData
+          - Bargeddie_Average_filter
     steps:
       - uses: actions/checkout@v2
 
