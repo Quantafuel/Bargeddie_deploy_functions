@@ -1,7 +1,8 @@
+numpy==2.3.2
+optype==0.13.4
+pandas==2.3.1
 # Example: You need a specific pandas version:
 # pandas==1.2.3
-numpy==2.3.2
-pandas==2.3.1
 python==3.13.5
-scipy==1.16.0
-scipy-stubs==1.16.1.0
+scipy==1.16.1
+scipy-stubs==1.16.1.1
