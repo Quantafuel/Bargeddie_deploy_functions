@@ -32,4 +32,4 @@ repos:
       - id: mypy
         verbose: true
         args: [--show-error-codes]
-        additional_dependencies: ['pytest', 'types-requests', 'pandas-stubs', 'cognite-sdk', 'types-pyyaml', scipy-stubs==1.16.1.0]
+        additional_dependencies: ['pytest', 'types-requests', 'pandas-stubs', 'cognite-sdk', 'types-pyyaml', scipy-stubs>=1.16.0.0]
