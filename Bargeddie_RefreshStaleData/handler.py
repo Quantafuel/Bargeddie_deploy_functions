@@ -13,9 +13,12 @@ def handle(client):
         'BRGD:s="DB_2-03-1-GA201"."Momentanwert_t_h"',
     ]
 
+    # seconds_ago = 58
     now = datetime.now()
     last_min_stop = now.replace(second=0, microsecond=0)
     last_min_start = last_min_stop - timedelta(seconds=60)
+
+    # td_ago = now - timedelta(seconds=seconds_ago)
 
     for i in ext_ids:
         latest_dp = client.time_series.data.retrieve_latest(external_id=i)
@@ -26,4 +29,5 @@ def handle(client):
         if last_min_start > latest_dp_datetime:
             for k in range(0, 60):
                 dp_insert.append((last_min_start.replace(second=k), latest_dp.value[0]))
+            # dp_insert = [(now, latest_dp.value[0])]
             client.time_series.data.insert(dp_insert, external_id=i)
