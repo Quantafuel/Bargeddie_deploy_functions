@@ -35,12 +35,12 @@ def handle(client):
                 result_sg.iloc[position] = 0
 
         result_sg_df = result_sg.to_frame()
-        result_sg_df.rename(columns={0: "Values"}, inplace=True)
+        result_sg_df.rename(columns={0: i + "_filtered"}, inplace=True)
 
         filtered_result = result_sg_df.loc[tw_start:tw_stop]
 
         if not filtered_result.dropna().empty:
-            client.time_series.data.insert(filtered_result, external_id=i + "_filtered")
+            client.time_series.data.insert_dataframe(filtered_result.dropna())
 
         print(f"Added filtered data from {tw_start} to {tw_stop} for timeseries {i + '_filtered'}")
     print("Function call ended successfully")
