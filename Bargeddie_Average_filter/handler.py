@@ -42,4 +42,4 @@ def handle(client):
         client.time_series.data.insert(filtered_result, external_id=i + "_filtered")
 
         print(f"Added filtered data from {tw_start} to {tw_stop} for timeseries {i + '_filtered'}")
-    print("Function call ended")
+    print("Function call ended successfully")
