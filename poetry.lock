@@ -196,14 +196,14 @@ files = [
 
 [[package]]
 name = "cognite-sdk"
-version = "7.82.0"
+version = "7.82.1"
 description = "Cognite Python SDK"
 optional = false
 python-versions = "<4.0,>=3.10"
 groups = ["main"]
 files = [
-    {file = "cognite_sdk-7.82.0-py3-none-any.whl", hash = "sha256:d08429ffb075b93dbc3819576acbdf30aa40ff8b2835b9a52f323ff3b2d40e0f"},
-    {file = "cognite_sdk-7.82.0.tar.gz", hash = "sha256:5741c515f06043a7544667e63b94d63993f4c02819c885b846d76cc799201914"},
+    {file = "cognite_sdk-7.82.1-py3-none-any.whl", hash = "sha256:3cc65972cc3fcb38dbe220c64f67a02eab7f817ceb638efa12358444541d6428"},
+    {file = "cognite_sdk-7.82.1.tar.gz", hash = "sha256:4fa575d30d994de59d2ca28b04a1dd3a73f6640d0c3bca397c84a496dadd3d64"},
 ]
 
 [package.dependencies]
@@ -526,6 +526,7 @@ files = [
 [package.dependencies]
 numpy = {version = ">=1.25", optional = true, markers = "extra == \"numpy\""}
 numpy-typing-compat = {version = ">=20250818.1.25,<20250819", optional = true, markers = "extra == \"numpy\""}
+typing-extensions = {version = ">=4.10", markers = "python_full_version < \"3.13.0\""}
 
 [package.extras]
 numpy = ["numpy (>=1.25)", "numpy-typing-compat (>=20250818.1.25,<20250819)"]
@@ -874,5 +875,5 @@ test = ["covdefaults (>=2.3)", "coverage (>=7.2.7)", "coverage-enable-subprocess
 
 [metadata]
 lock-version = "2.1"
-python-versions = "^3.13"
-content-hash = "30b9e75946295da6c6f1285e5fd6423a47afd57c32f31e42eef99cba192d33cf"
+python-versions = "^3.11"
+content-hash = "81dc545f572179cd1910ee16c7069aa1789122eea96d4b6ef2e8acbd1f72d5b9"
