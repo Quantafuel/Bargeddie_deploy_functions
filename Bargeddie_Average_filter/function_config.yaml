@@ -5,6 +5,7 @@ common_folder: common
 owner: Quantafuel
 cpu: 1.0
 memory: 1.0
+runtime: py311
 env_vars: {"COGNITE_BASE_URL": "https://api.cognitedata.com",
   "COGNITE_PROJECT": "viridorenergy",
   "COGNITE_TOKEN_URL": "https://login.microsoftonline.com/92bce3bb-abfb-484b-b074-32e1a37f3631/oauth2/v2.0/token",

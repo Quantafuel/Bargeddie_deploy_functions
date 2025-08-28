@@ -6,7 +6,7 @@ Created on Fri Aug 15 12:36:46 2025
 """
 
 
-def handle(client, runtime="py311"):
+def handle(client):
     from datetime import datetime, timedelta
     from zoneinfo import ZoneInfo
 
