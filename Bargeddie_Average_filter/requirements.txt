@@ -1,0 +1,5 @@
+numpy>=2.0.0
+pandas>=2.2.0
+#python>=3.11
+scipy>=1.14
+scipy-stubs>=1.14
