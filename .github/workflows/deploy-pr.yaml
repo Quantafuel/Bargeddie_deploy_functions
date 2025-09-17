@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         function:
-          - Bargeddie_Average_filter
+          - Bargeddie_Estops
     steps:
       - uses: actions/checkout@v4
 
