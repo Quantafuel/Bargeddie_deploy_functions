@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         function:
-          - Bargeddie_Estops
+          - Bargeddie_deploy_functions
     steps:
       - uses: actions/checkout@v4
 
