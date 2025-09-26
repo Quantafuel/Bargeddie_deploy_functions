@@ -6,7 +6,6 @@ Created on Fri Sep 26 11:55:09 2025
 """
 
 def handle(client):
-    from cognite.client.data_classes import TimeSeriesWrite
     from datetime import datetime
     ts = client.time_series.retrieve(id=4650215105734580)
     
