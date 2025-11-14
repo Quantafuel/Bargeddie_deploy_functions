@@ -77,4 +77,5 @@ def handle(client):
     dfs = [df_in, df_out, df_metal]
 
     for df in dfs:
+        print(f"New datapoints for {df.columns[0]}:", len(df_in))
         client.time_series.data.insert_dataframe(df)
