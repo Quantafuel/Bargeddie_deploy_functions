@@ -11,6 +11,7 @@ def handle(client):
 
     import pandas as pd
 
+    # Function for calculating cumsum of latest data
     def continue_cumsum(df, movement_type, last_value, new_col_name):
         d = df[df["MovementType"] == movement_type].copy()
         if d.empty:
