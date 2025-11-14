@@ -15,10 +15,11 @@ def handle(client):
     def continue_cumsum(df, movement_type, last_value, new_col_name):
         d = df[df["MovementType"] == movement_type].copy()
         if d.empty:
-            return pd.DataFrame(columns=[new_col_name])  # no new values
+            return pd.DataFrame(columns=[new_col_name], index=pd.DatetimeIndex([], name="Date"))
 
         d["Sum"] = d["WeightTare"].cumsum() + last_value
         d = d[["Date", "Sum"]].rename(columns={"Sum": new_col_name})
+        d["Date"] = pd.to_datetime(d["Date"])
         return d.set_index("Date")
 
     old_waste_in_lastest = client.time_series.data.retrieve_latest(external_id="brgd_accumulated_waste_in")
