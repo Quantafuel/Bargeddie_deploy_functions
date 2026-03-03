@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         function:
-          - Bargeddie_amcs_data
+          - Waste_model
     steps:
       - uses: actions/checkout@v4
 
