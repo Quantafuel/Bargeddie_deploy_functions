@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         function:
-          - Bargeddie_amcs_data
+          - Bargeddie_Line_status
     steps:
       - uses: actions/checkout@v4
 

@@ -8,7 +8,7 @@ jobs:
   generate-matrix:
     uses: "./.github/workflows/generate-matrix.yaml"
     with:
-      deploy_folders: "Bargeddie_amcs_data"
+      deploy_folders: "Bargeddie_Line_status"
       trigger_deploy_all_folders: "common"
 
   deploy:
