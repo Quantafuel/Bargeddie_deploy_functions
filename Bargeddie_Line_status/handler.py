@@ -11,16 +11,16 @@ def handle(client):
 
     now = datetime.now(tz=ZoneInfo("Europe/Oslo"))
 
-    dps1 = client.time_series.data.retrieve_dataframe_in_tz(
+    dps1 = client.time_series.data.retrieve_dataframe(
         external_id='BRGD:s="DB_1-03-M1"."Motorleistung"',
         start=now - timedelta(hours=2),
-        end=datetime.now(tz=ZoneInfo("Europe/Oslo")),
+        end=datetime.now(),
     )
 
-    dps2 = client.time_series.data.retrieve_dataframe_in_tz(
+    dps2 = client.time_series.data.retrieve_dataframe(
         external_id='BRGD:s="DB_2-03-M1"."Motorleistung"',
         start=now - timedelta(hours=2),
-        end=datetime.now(tz=ZoneInfo("Europe/Oslo")),
+        end=datetime.now(),
     )
 
     def status(value):
