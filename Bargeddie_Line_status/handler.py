@@ -27,5 +27,5 @@ def handle(client):
     else:
         status_line2 = 1
 
-    client.time_series.data.insert([datetime.now(), status_line1], external_id=out1)
-    client.time_series.data.insert([datetime.now(), status_line2], external_id=out2)
+    client.time_series.data.insert([(datetime.now().timestamp(), status_line1)], external_id=out1)
+    client.time_series.data.insert([(datetime.now().timestamp(), status_line2)], external_id=out2)
