@@ -4,21 +4,23 @@ def handle(client):
     pandas
     [/requirements]
     """
-    from datetime import datetime
+    from datetime import datetime, timedelta
 
     import pandas as pd
 
     from cognite.client.utils import ZoneInfo
 
+    now = datetime.now(tz=ZoneInfo("Europe/Oslo"))
+
     dps1 = client.time_series.data.retrieve_dataframe_in_tz(
         external_id='BRGD:s="DB_1-03-M1"."Motorleistung"',
-        start=datetime(2025, 6, 18, tzinfo=ZoneInfo("Europe/Oslo")),
+        start=now - timedelta(hours=2),
         end=datetime.now(tz=ZoneInfo("Europe/Oslo")),
     )
 
     dps2 = client.time_series.data.retrieve_dataframe_in_tz(
         external_id='BRGD:s="DB_2-03-M1"."Motorleistung"',
-        start=datetime(2025, 6, 18, tzinfo=ZoneInfo("Europe/Oslo")),
+        start=now - timedelta(hours=2),
         end=datetime.now(tz=ZoneInfo("Europe/Oslo")),
     )
 
