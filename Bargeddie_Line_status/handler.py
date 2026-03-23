@@ -4,38 +4,28 @@ def handle(client):
     pandas
     [/requirements]
     """
+    from datetime import datetime
 
-    from datetime import datetime, timedelta
-    from zoneinfo import ZoneInfo
-
-    import pandas as pd
-
-    now = datetime.now(tz=ZoneInfo("Europe/Oslo"))
-
-    # Retrieve signals
-    dps1 = client.time_series.data.retrieve_dataframe(
-        external_id='BRGD:s="DB_1-03-M1"."Motorleistung"',
-        start=now - timedelta(hours=2),
-        end=now,
-    )
-
-    dps2 = client.time_series.data.retrieve_dataframe(
-        external_id='BRGD:s="DB_2-03-M1"."Motorleistung"',
-        start=now - timedelta(hours=2),
-        end=now,
-    )
-
-    # Column names
     col1 = 'BRGD:s="DB_1-03-M1"."Motorleistung"'
     col2 = 'BRGD:s="DB_2-03-M1"."Motorleistung"'
+    out1 = "brgd_line1_status"
+    out2 = "brgd_line2_status"
 
-    # --- Vectorized thresholding (FAST, SAFE, CLEAN) ---
-    dps1["status"] = (dps1[col1] >= 0.3).astype(int)
-    dps2["status"] = (dps2[col2] >= 0.3).astype(int)
+    # --- Retrieve timeseries as DataFrames ---
+    dps1 = client.time_series.data.retrieve_latest(external_id=col1, before=datetime.now())
 
-    # Prepare for write-back
-    df1 = pd.DataFrame({"brgd_line1_status": dps1["status"]}, index=dps1.index)
-    df2 = pd.DataFrame({"brgd_line2_status": dps2["status"]}, index=dps2.index)
+    dps2 = client.time_series.data.retrieve_latest(external_id=col2, before=datetime.now())
 
-    client.time_series.data.insert_dataframe(df1)
-    client.time_series.data.insert_dataframe(df2)
+    if dps1.value[0] <= 1:
+        status_line1 = 0
+    else:
+        print("dps1 false")
+        status_line1 = 1
+
+    if dps2.value[0] < 1:
+        status_line2 = 0
+    else:
+        status_line2 = 1
+
+    client.time_series.data.insert_datapoint([datetime.now(), status_line1], external_id=out1)
+    client.time_series.data.insert_datapoint([datetime.now(), status_line2], external_id=out2)
