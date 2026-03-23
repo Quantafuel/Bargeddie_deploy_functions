@@ -4,6 +4,7 @@ def handle(client):
     pandas
     [/requirements]
     """
+
     from datetime import datetime, timedelta
     from zoneinfo import ZoneInfo
 
@@ -11,32 +12,30 @@ def handle(client):
 
     now = datetime.now(tz=ZoneInfo("Europe/Oslo"))
 
+    # Retrieve signals
     dps1 = client.time_series.data.retrieve_dataframe(
         external_id='BRGD:s="DB_1-03-M1"."Motorleistung"',
         start=now - timedelta(hours=2),
-        end=datetime.now(tz=ZoneInfo("Europe/Oslo")),
+        end=now,
     )
 
     dps2 = client.time_series.data.retrieve_dataframe(
         external_id='BRGD:s="DB_2-03-M1"."Motorleistung"',
         start=now - timedelta(hours=2),
-        end=datetime.now(tz=ZoneInfo("Europe/Oslo")),
+        end=now,
     )
 
-    def status(value):
-        if value < 0.3:
-            return 0
-        else:
-            return 1
+    # Column names
+    col1 = 'BRGD:s="DB_1-03-M1"."Motorleistung"'
+    col2 = 'BRGD:s="DB_2-03-M1"."Motorleistung"'
 
-    dps1["status"] = dps1['BRGD:s="DB_1-03-M1"."Motorleistung"'].apply(lambda x: status(x))
-    dps2["status"] = dps2['BRGD:s="DB_2-03-M1"."Motorleistung"'].apply(lambda x: status(x))
+    # --- Vectorized thresholding (FAST, SAFE, CLEAN) ---
+    dps1["status"] = (dps1[col1] >= 0.3).astype(int)
+    dps2["status"] = (dps2[col2] >= 0.3).astype(int)
 
-    ts_xid1 = "brgd_line1_status"
-    ts_xid2 = "brgd_line2_status"
-
-    df1 = pd.DataFrame({ts_xid1: dps1["status"]}, index=dps1.index)
-    df2 = pd.DataFrame({ts_xid2: dps2["status"]}, index=dps2.index)
+    # Prepare for write-back
+    df1 = pd.DataFrame({"brgd_line1_status": dps1["status"]}, index=dps1.index)
+    df2 = pd.DataFrame({"brgd_line2_status": dps2["status"]}, index=dps2.index)
 
     client.time_series.data.insert_dataframe(df1)
     client.time_series.data.insert_dataframe(df2)
