@@ -5,10 +5,9 @@ def handle(client):
     [/requirements]
     """
     from datetime import datetime, timedelta
+    from zoneinfo import ZoneInfo
 
     import pandas as pd
-
-    from cognite.client.utils import ZoneInfo
 
     now = datetime.now(tz=ZoneInfo("Europe/Oslo"))
 
