@@ -16,16 +16,16 @@ def handle(client):
 
     dps2 = client.time_series.data.retrieve_latest(external_id=col2, before=datetime.now())
 
-    if dps1.value <= 1:
+    if dps1.value[0] <= 1:
         status_line1 = 0
     else:
         print("dps1 false")
         status_line1 = 1
 
-    if dps2.value < 1:
+    if dps2.value[0] < 1:
         status_line2 = 0
     else:
         status_line2 = 1
 
-    client.time_series.data.insert([(datetime.now().timestamp(), status_line1)], external_id=out1)
-    client.time_series.data.insert([(datetime.now().timestamp(), status_line2)], external_id=out2)
+    client.time_series.data.insert([(datetime.now().timestamp() * 1000, status_line1)], external_id=out1)
+    client.time_series.data.insert([(datetime.now().timestamp() * 1000, status_line2)], external_id=out2)
