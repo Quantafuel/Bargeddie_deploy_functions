@@ -1,0 +1,60 @@
+name: Inspect Function Secret
+on:
+  workflow_dispatch:
+    inputs:
+      secret_name:
+        description: 'Repository secret name (exact). Example: EXTRA_SECRETS_Skive_drain_data'
+        required: true
+        default: 'EXTRA_SECRETS_Skive_drain_data'
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check secret exists
+        id: check
+        run: |
+          # secrets[<dynamic>] resolves to empty if not present
+          if [ -z "${{ secrets[github.event.inputs.secret_name] }}" ]; then
+            echo "secret_missing=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "secret_missing=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Decode and show masked client_id
+        if: steps.check.outputs.secret_missing == 'false'
+        env:
+          SECRET_VALUE: ${{ secrets[github.event.inputs.secret_name] }}
+        run: |
+          set -euo pipefail
+
+          # Decode base64 safely (don't print the decoded value)
+          decoded=$(printf '%s' "$SECRET_VALUE" | base64 --decode 2>/dev/null || true)
+
+          if [ -z "$decoded" ]; then
+            echo "Failed to decode secret or decoded value is empty"
+            exit 1
+          fi
+
+          # Extract client_id (assumes format CLIENT_ID:CLIENT_SECRET)
+          client_id="${decoded%%:*}"
+
+          if [ -z "$client_id" ]; then
+            echo "No client_id found (expected 'CLIENT_ID:CLIENT_SECRET' after base64 decode)"
+            exit 1
+          fi
+
+          # Mask the client_id for safe display
+          len=${#client_id}
+          if [ "$len" -le 8 ]; then
+            masked="${client_id:0:1}***${client_id: -1}"
+          else
+            masked="${client_id:0:4}****${client_id: -4}"
+          fi
+
+          echo "Client ID (masked): $masked"
+
+      - name: Secret not found
+        if: steps.check.outputs.secret_missing == 'true'
+        run: |
+          echo "Secret '${{ github.event.inputs.secret_name }}' not found in repository secrets."
